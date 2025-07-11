@@ -7,24 +7,10 @@ body {
 }
 article {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr auto 1fr;
     margin-top: 10px;
     padding: 0 10px;
 }
-footer {
-    display: grid;
-    align-items: center;
-    margin: 20px 0;
-}
-footer p {
-    padding: 5px 10px;
-    margin: 0;
-    text-align: center;
-}
-footer a.selected {
-    text-decoration: none;
-}
-footer.print {display: none;}
 nav {
     text-align: center;
     margin-top: 20px;
@@ -76,7 +62,7 @@ table {
     "Courier New", monospace;
 }
 .labels.right {
-    counter-reset: pin 41;
+    counter-reset: pin 33;
     display: grid;
     align-items: left;
     position: relative;
@@ -101,22 +87,28 @@ table {
 .labels.right tbody tr {
     counter-increment: pin -1;
 }
+
+/* USB Port Labels */
 .labels.below {
     grid-column: 2;
-    margin: -5px auto 0 auto;
-    position: relative;
-    left: 2px;
 }
 .labels.below td {
-    width: 25px;
     height: auto;
     border: none;
     padding: 0;
-    writing-mode: vertical-lr;
     vertical-align: top;
-    min-width: 25px;
-    display: inline-block;
+    text-align: center;
 }
+.labels.below td:nth-child(1) {
+    padding-right: 25px;
+    padding-left: 10px;
+}
+.labels.below td:nth-child(2) {
+    padding-right: 10px;
+    padding-left: 25px;
+}
+
+/* Upside-down View */
 .australian-view .labels.left, .australian-view .labels.right {
     transform: scale(1, -1);
 }
@@ -125,10 +117,29 @@ table {
 }
 .australian-view .labels.below {
     position: relative;
-    top: -550px;
+    top: -628px;
+}
+.australian-view .labels.below td:nth-child(1) {
+    padding-right: 10px;
+    padding-left: 25px;
+}
+.australian-view .labels.below td:nth-child(2) {
+    padding-right: 25px;
+    padding-left: 10px;
+}
+.underside-view.australian-view .labels.below td:nth-child(1) {
+    padding-right: 25px;
+    padding-left: 10px;
+}
+.underside-view.australian-view .labels.below td:nth-child(2) {
+    
+    padding-right: 10px;
+    padding-left: 25px;
 }
 .labels th, .labels thead {display:none;}
-.labels tbody tr:before {
+
+.labels.left tbody tr:before,
+.labels.right tbody tr:before {
     content: counter(pin);
     text-align: center;
     float: right;
@@ -140,7 +151,6 @@ table {
 .labels.right tbody tr:before {
     float: left;
 }
-.labels.below tbody tr:before {display:none;}
 td, th {
     height: 20px;
     text-align: left;
@@ -153,7 +163,19 @@ td, th {
     border-width:0 4px 0 4px;
     border-style: solid;
     padding: 0 5px;
-    min-width: 60px;
+    min-width: 80px;
+}
+.labels.left td:nth-child(2), .labels.right td:nth-child(2) {
+    min-width: 50px;
+}
+.labels sup {
+    font-size: 6px;
+    vertical-align: bottom;
+    position: relative;
+    top: -4px;
+}
+.extra table {
+    grid-column: 2;
 }
 .extra td {
     border: none;
@@ -166,16 +188,6 @@ td, th {
 .extra th {
     border: none;
     background-color: transparent;
-}
-.extra .wl_gpio {
-    position: relative;
-    top: 5px;
-}
-.extra .wl_gpio td {
-    background-color: #d3368222;
-}
-.extra .wl_gpio tr:nth-child(odd) td {
-    background-color: #d3368233;
 }
 .extra .power_pins td {
     background-color: #dc322f22;
@@ -198,13 +210,13 @@ td, th {
 .gpio   {background-color: #85990033;border-color: #859900;}
 .ground {background-color: #002b3633;border-color: #002b36;}
 .power  {background-color: #dc322f33;border-color: #dc322f;}
-.adc    {background-color: #2aa19833;border-color: #2aa198;}
-.hstx   {background-color: #2aa19833;border-color: #2aa198;}
+.adc    {background-color: #d8d80f33;border-color: #d8d80f;}
+.jtag   {background-color: #2aa19833;border-color: #2aa198;}
 .system {background-color: #df8f8e33;border-color: #df8f8e;}
 .i2c    {background-color: #268bd233;border-color: #268bd2;}
-.spi    {background-color: #d3368233;border-color: #d33682;}
+.sdio    {background-color: #d3368233;border-color: #d33682;}
 .uart   {background-color: #6c71c433;border-color: #6c71c4;}
-.pwm    {background-color: #33333333;border-color: #333333;}
+.fspi    {background-color: #33333333;border-color: #333333;}
 
 .labels.left td {border-width:0 0 0 4px;}
 .labels.right td {border-width:0 4px 0 0;}
@@ -213,13 +225,13 @@ td, th {
 .labels tr:hover .gpio   {background-color: #9fb80366;}
 .labels tr:hover .ground {background-color: #01435366;}
 .labels tr:hover .power  {background-color: #f13a3766;}
-.labels tr:hover .adc    {background-color: #39d1c466;}
-.labels tr:hover .hstx   {background-color: #39d1c466;}
+.labels tr:hover .adc    {background-color: #d8d80f66;}
+.labels tr:hover .jtag   {background-color: #39d1c466;}
 .labels tr:hover .system {background-color: #fab4b266;}
 .labels tr:hover .i2c    {background-color: #3ba6f166;}
-.labels tr:hover .spi    {background-color: #f34f9f66;}
+.labels tr:hover .sdio    {background-color: #f34f9f66;}
 .labels tr:hover .uart   {background-color: #8d91e666;}
-.labels tr:hover .pwm    {background-color: #44444466;}
+.labels tr:hover .fspi    {background-color: #44444466;}
 
 .filter {
     list-style: none;
@@ -302,12 +314,22 @@ td, th {
 .underside-view .labels.left td {border-width:0 4px 0 0;}
 .underside-view .labels.right td {border-width:0 0 0 4px;}
 
-sup {
-    position: absolute;
-    top: -25%;
-    font-size: 70%;
-    vertical-align: middle;
+/* Footer */
+footer {
+    display: grid;
+    align-items: center;
+    margin: 20px 0;
 }
+footer p {
+    padding: 5px 10px;
+    margin: 0;
+    text-align: center;
+}
+footer a.selected {
+    text-decoration: none;
+}
+footer.print {display: none;}
+
 
 @media (prefers-color-scheme: dark) {
     body {
@@ -332,7 +354,8 @@ sup {
     footer a:hover {
         color: #3ba6f1;
     }
-    .labels tbody tr:before {
+    .labels.left tbody tr:before,
+    .labels.right tbody tr:before {
         background-color: #002b36;
         color: #e9e5d2;
     }
